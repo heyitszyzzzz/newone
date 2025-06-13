@@ -100,7 +100,8 @@ const useTypingEffect = (text: string, speed = 30) => {
 const storyChapters = [
   {
     title: "The Ring",
-    image: "/placeholder.svg?height=128&width=128",
+    image: "https://i.ibb.co/LQrYvWp/image-8a9a97.jpg",
+    alt: "A man's hand wearing a silver ring with a square blue Lapis Lazuli stone.",
     body: [
       "Let's be real. Hours after my mum passed, my head was a mess. Numb. In that chaos, for no reason at all, I started going through her stuff. My hand just found this ring. Didn't even really look at it.",
       "I was on the phone, distracted, tried putting it on. Wouldn't fit my index finger. Wouldn't fit my middle. My hands were full, so I got my cousin to stick it on the only one it fit. The wedding finger.",
@@ -109,6 +110,18 @@ const storyChapters = [
   },
   {
     title: "The Connection",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 256 256"
+        fill="currentColor"
+        className="text-amber-300"
+      >
+        <path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm0,192a88,88,0,1,1,88-88A88.1,88.1,0,0,1,128,216ZM128,72a44,44,0,0,0-44,44,8,8,0,0,0,16,0,28,28,0,0,1,56,0,8,8,0,0,0,16,0A44,44,0,0,0,128,72Zm-8,88H120a8,8,0,0,0-8,8v40a8,8,0,0,0,16,0V176h8a8,8,0,0,0,0-16Z" />
+      </svg>
+    ),
     body: [
       "Then it gets weirder. I've always been into Egyptian mythology. It's not just a phase; I've got Tutankhamun and the Eye of Horus tatted on my arm. It's part of me.",
       "The stone in the ring is Lapis Lazuli. The exact same stone the Egyptians were obsessed with. They thought it was a piece of the sky, used it on their pharaohs' tombs to guide them in the afterlife.",
@@ -117,6 +130,18 @@ const storyChapters = [
   },
   {
     title: "The Soundtrack",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 256 256"
+        fill="currentColor"
+        className="text-amber-300"
+      >
+        <path d="M213.66,82.34l-56-56A8,8,0,0,0,152,24H56A16,16,0,0,0,40,40V216a16,16,0,0,0,16,16H200a16,16,0,0,0,16-16V88A8,8,0,0,0,213.66,82.34ZM160,51.31,188.69,80H160ZM200,216H56V40h88V88a8,8,0,0,0,8,8h48V216Z" />
+      </svg>
+    ),
     body: [
       "Then my own playlist started talking to me. A raw, biographical song about a son's sacrifice for his immigrant mother—ending with his own mum's voice—started hitting different.",
       "Another track, about a fire burning so hot it only leaves pure 'white ash,' became real too. The ash from my rollies on the table was a constant reminder of my own trial by fire.",
@@ -125,6 +150,18 @@ const storyChapters = [
   },
   {
     title: "The Grind",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 256 256"
+        fill="currentColor"
+        className="text-amber-300"
+      >
+        <path d="M244.27,148.6l-33-99.06a16,16,0,0,0-15.1-11.54H59.83a16,16,0,0,0-15.1,11.54l-33,99.06a16,16,0,0,0,5.73,18.07,16.08,16.08,0,0,0,18.14,1.33L72,150.4V208a16,16,0,0,0,16,16h80a16,16,0,0,0,16-16V150.4l36.37,17.6a16.08,16.08,0,0,0,18.14-1.33A16,16,0,0,0,244.27,148.6ZM168,208H88V144h80Zm47-66.4-39-18.92V144a16,16,0,0,0-16-16H96a16,16,0,0,0-16,16v-21.32l-39-18.92L64.2,56h127.6Z" />
+      </svg>
+    ),
     body: [
       "None of this makes sense without the backstory. My one mission was to retire my mum. I moved back to Brazil from Edinburgh, juggling UK clients, a fucked-up time difference, and undiagnosed ADHD.",
       "To cope, I got hooked on coke. It was cheaper than a pack of fags in the UK. I was working 48-hour stretches. Not a typo. Forty-eight hours straight, forcing myself to stay up through hallucinations to keep my clients and keep the money coming in for her.",
@@ -133,6 +170,30 @@ const storyChapters = [
   },
   {
     title: "The Reset",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 78.97 48"
+        fill="none"
+        className="text-amber-300"
+      >
+        <path
+          d="M78.03 24C78.03 24 60.58 47.03 39.5 47.03C18.42 47.03 0.97 24 0.97 24C0.97 24 18.42 0.97 39.5 0.97C60.58 0.97 78.03 24 78.03 24Z"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeMiterlimit="10"
+        ></path>
+        <path
+          d="M59.13 24C59.13 34.84 49.97 43.6 39.5 43.6C29.03 43.6 19.87 34.84 19.87 24C19.87 13.16 29.03 4.4 39.5 4.4C49.97 4.4 59.13 13.16 59.13 24Z"
+          stroke="currentColor"
+          strokeWidth="3"
+          strokeMiterlimit="10"
+        ></path>
+        <circle cx="39.5" cy="24" r="7.25" fill="currentColor"></circle>
+      </svg>
+    ),
     body: [
       "Months before she passed, my body gave up. A massive overdose. I remember my vision just... switching off. A feeling of total peace, accepting it was over. Then, I blinked back into existence on a public toilet floor.",
       "I couldn't walk. I had to crawl out. A doctor from a nearby clinic found me. Mid-respiratory failure, I was just shouting out antidotes I somehow knew: 'Coke... OD... Propranolol... Diazepam!'",
@@ -140,8 +201,21 @@ const storyChapters = [
     ],
   },
   {
-    title: "A Message For You",
+    title: "A Message From The Stars",
     type: "interactive",
+    icon: (
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="48"
+        height="48"
+        viewBox="0 0 256 256"
+        fill="currentColor"
+        className="text-amber-300"
+      >
+        <path d="M228,128a12,12,0,0,1-12,12H183.13l-16.64,38.28a12,12,0,0,1-21.92-9.52L156,140H100l-11.43,28.76a12,12,0,0,1-21.92-9.52L84.87,140H40a12,12,0,0,1,0-24h44.87l11.43-28.76a12,12,0,0,1,21.92,9.52L108,116h56l11.43-28.76a12,12,0,0,1,21.92,9.52L183.13,116H216A12,12,0,0,1,228,128Z"></path>
+      </svg>
+    ),
+    body: [],
   },
 ]
 
@@ -215,9 +289,14 @@ export default function RingStory() {
           {currentChapter.image && (
             <img
               src={currentChapter.image || "/placeholder.svg"}
-              alt="Ring on a finger"
+              alt={currentChapter.alt || "Chapter image"}
               className="w-32 h-32 mb-6 object-cover rounded-full shadow-lg border-2 border-amber-300/50"
             />
+          )}
+          {currentChapter.icon && (
+            <div className="w-32 h-32 mb-6 flex items-center justify-center rounded-full shadow-lg border-2 border-amber-300/50 bg-black/20">
+              {currentChapter.icon}
+            </div>
           )}
           <h1 className="text-3xl font-bold text-amber-300 tracking-wider mb-6">{currentChapter.title}</h1>
           <div className="text-lg leading-relaxed space-y-6 text-gray-300">
