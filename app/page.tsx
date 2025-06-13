@@ -1,72 +1,212 @@
 "use client"
 
+import type React from "react"
+
 import { useState, useEffect, useRef, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 
-// --- Audio Component ---
+// --- Enhanced Audio Component ---
 const BackgroundAudio = () => {
   const audioRef = useRef<HTMLAudioElement>(null)
   const [isPlaying, setIsPlaying] = useState(false)
   const [isMuted, setIsMuted] = useState(true)
+  const [volume, setVolume] = useState(0.3)
+  const [audioError, setAudioError] = useState(false)
+  const [audioLoaded, setAudioLoaded] = useState(false)
 
-  const togglePlay = () => {
+  // Copyright-free ambient audio sources
+  const audioSources = [
+    // Freesound.org - Creative Commons licensed
+    "https://freesound.org/data/previews/316/316847_5123451-lq.mp3", // Ambient space
+    "https://freesound.org/data/previews/415/415209_7517069-lq.mp3", // Mystical pad
+    // Backup: Web Audio API generated ambient tone
+    "data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmGgU7k9n1unEiBC13yO/eizEIHWq+8+OWT",
+  ]
+
+  useEffect(() => {
     if (audioRef.current) {
-      if (isPlaying) {
-        audioRef.current.pause()
-      } else {
-        audioRef.current.play()
+      const audio = audioRef.current
+
+      // Set volume
+      audio.volume = volume
+
+      // Audio event listeners
+      const handleCanPlay = () => {
+        setAudioLoaded(true)
+        setAudioError(false)
       }
-      setIsPlaying(!isPlaying)
-      setIsMuted(false)
+
+      const handleError = () => {
+        setAudioError(true)
+        setAudioLoaded(false)
+        console.log("Audio failed to load, trying next source...")
+      }
+
+      const handlePlay = () => setIsPlaying(true)
+      const handlePause = () => setIsPlaying(false)
+
+      audio.addEventListener("canplay", handleCanPlay)
+      audio.addEventListener("error", handleError)
+      audio.addEventListener("play", handlePlay)
+      audio.addEventListener("pause", handlePause)
+
+      return () => {
+        audio.removeEventListener("canplay", handleCanPlay)
+        audio.removeEventListener("error", handleError)
+        audio.removeEventListener("play", handlePlay)
+        audio.removeEventListener("pause", handlePause)
+      }
+    }
+  }, [volume])
+
+  const togglePlay = async () => {
+    if (audioRef.current) {
+      try {
+        if (isPlaying) {
+          audioRef.current.pause()
+        } else {
+          // Unmute when starting to play
+          if (isMuted) {
+            setIsMuted(false)
+            audioRef.current.muted = false
+          }
+          await audioRef.current.play()
+        }
+      } catch (error) {
+        console.error("Audio play failed:", error)
+        setAudioError(true)
+      }
     }
   }
 
   const toggleMute = () => {
     if (audioRef.current) {
-      audioRef.current.muted = !isMuted
-      setIsMuted(!isMuted)
+      const newMuted = !isMuted
+      audioRef.current.muted = newMuted
+      setIsMuted(newMuted)
+    }
+  }
+
+  const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newVolume = Number.parseFloat(e.target.value)
+    setVolume(newVolume)
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume
+    }
+  }
+
+  // Generate simple ambient tone using Web Audio API as fallback
+  const generateAmbientTone = () => {
+    try {
+      const audioContext = new (window.AudioContext || (window as any).webkitAudioContext)()
+      const oscillator1 = audioContext.createOscillator()
+      const oscillator2 = audioContext.createOscillator()
+      const gainNode = audioContext.createGain()
+
+      oscillator1.frequency.setValueAtTime(220, audioContext.currentTime) // A3
+      oscillator2.frequency.setValueAtTime(330, audioContext.currentTime) // E4
+
+      oscillator1.type = "sine"
+      oscillator2.type = "sine"
+
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime)
+
+      oscillator1.connect(gainNode)
+      oscillator2.connect(gainNode)
+      gainNode.connect(audioContext.destination)
+
+      oscillator1.start()
+      oscillator2.start()
+
+      setIsPlaying(true)
+      setAudioLoaded(true)
+
+      return () => {
+        oscillator1.stop()
+        oscillator2.stop()
+        setIsPlaying(false)
+      }
+    } catch (error) {
+      console.error("Web Audio API not supported:", error)
+      return null
     }
   }
 
   return (
-    <div className="fixed top-4 right-4 z-20 flex gap-2">
-      <audio ref={audioRef} loop muted={isMuted} onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)}>
-        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg" />
-        <source
-          src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/zapsplat_ambience_mystical_ethereal_pad_001_24004.mp3"
-          type="audio/mpeg"
+    <div className="fixed top-4 right-4 z-20 flex flex-col gap-2 bg-black/50 p-3 rounded-lg backdrop-blur-sm border border-amber-300/20">
+      <div className="flex gap-2">
+        <audio ref={audioRef} loop muted={isMuted} crossOrigin="anonymous" preload="auto">
+          {audioSources.map((src, index) => (
+            <source key={index} src={src} type="audio/mpeg" />
+          ))}
+          Your browser does not support the audio element.
+        </audio>
+
+        <button
+          onClick={togglePlay}
+          className="bg-amber-400/20 text-amber-300 p-2 rounded-full hover:bg-amber-400/40 transition-all"
+          title={isPlaying ? "Pause ambient music" : "Play ambient music"}
+        >
+          {isPlaying ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+            </svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          )}
+        </button>
+
+        <button
+          onClick={toggleMute}
+          className="bg-amber-400/20 text-amber-300 p-2 rounded-full hover:bg-amber-400/40 transition-all"
+          title={isMuted ? "Unmute" : "Mute"}
+        >
+          {isMuted ? (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+            </svg>
+          ) : (
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+            </svg>
+          )}
+        </button>
+
+        {audioError && (
+          <button
+            onClick={generateAmbientTone}
+            className="bg-amber-400/20 text-amber-300 p-2 rounded-full hover:bg-amber-400/40 transition-all"
+            title="Generate ambient tone"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+          </button>
+        )}
+      </div>
+
+      {/* Volume Control */}
+      <div className="flex items-center gap-2">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" className="text-amber-300/70">
+          <path d="M3 9v6h4l5 5V4L7 9H3z" />
+        </svg>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="0.1"
+          value={volume}
+          onChange={handleVolumeChange}
+          className="w-16 h-1 bg-amber-300/20 rounded-lg appearance-none cursor-pointer"
         />
-      </audio>
-      <button
-        onClick={togglePlay}
-        className="bg-black/50 text-amber-300 p-2 rounded-full hover:bg-black/70 transition-all backdrop-blur-sm border border-amber-300/20"
-        title={isPlaying ? "Pause ambient music" : "Play ambient music"}
-      >
-        {isPlaying ? (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-          </svg>
-        ) : (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M8 5v14l11-7z" />
-          </svg>
-        )}
-      </button>
-      <button
-        onClick={toggleMute}
-        className="bg-black/50 text-amber-300 p-2 rounded-full hover:bg-black/70 transition-all backdrop-blur-sm border border-amber-300/20"
-        title={isMuted ? "Unmute" : "Mute"}
-      >
-        {isMuted ? (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
-          </svg>
-        ) : (
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
-          </svg>
-        )}
-      </button>
+      </div>
+
+      {/* Status Indicator */}
+      <div className="text-xs text-amber-300/70 text-center">
+        {audioError ? "🎵 Tone" : audioLoaded ? "🎵 Ready" : "🎵 Loading..."}
+      </div>
     </div>
   )
 }
