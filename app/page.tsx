@@ -3,6 +3,74 @@
 import { useState, useEffect, useRef, useCallback } from "react"
 import { Button } from "@/components/ui/button"
 
+// --- Audio Component ---
+const BackgroundAudio = () => {
+  const audioRef = useRef<HTMLAudioElement>(null)
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
+
+  const togglePlay = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause()
+      } else {
+        audioRef.current.play()
+      }
+      setIsPlaying(!isPlaying)
+      setIsMuted(false)
+    }
+  }
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !isMuted
+      setIsMuted(!isMuted)
+    }
+  }
+
+  return (
+    <div className="fixed top-4 right-4 z-20 flex gap-2">
+      <audio ref={audioRef} loop muted={isMuted} onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)}>
+        <source src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" type="audio/mpeg" />
+        <source
+          src="https://www.zapsplat.com/wp-content/uploads/2015/sound-effects-one/zapsplat_ambience_mystical_ethereal_pad_001_24004.mp3"
+          type="audio/mpeg"
+        />
+      </audio>
+      <button
+        onClick={togglePlay}
+        className="bg-black/50 text-amber-300 p-2 rounded-full hover:bg-black/70 transition-all backdrop-blur-sm border border-amber-300/20"
+        title={isPlaying ? "Pause ambient music" : "Play ambient music"}
+      >
+        {isPlaying ? (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M8 5v14l11-7z" />
+          </svg>
+        )}
+      </button>
+      <button
+        onClick={toggleMute}
+        className="bg-black/50 text-amber-300 p-2 rounded-full hover:bg-black/70 transition-all backdrop-blur-sm border border-amber-300/20"
+        title={isMuted ? "Unmute" : "Mute"}
+      >
+        {isMuted ? (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z" />
+          </svg>
+        ) : (
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z" />
+          </svg>
+        )}
+      </button>
+    </div>
+  )
+}
+
 // --- Particle Component for Background Effect ---
 const Starfield = () => {
   const [particles, setParticles] = useState<
@@ -100,8 +168,8 @@ const useTypingEffect = (text: string, speed = 30) => {
 const storyChapters = [
   {
     title: "The Ring",
-    image: "https://i.ibb.co/LQrYvWp/image-8a9a97.jpg",
-    alt: "A man's hand wearing a silver ring with a square blue Lapis Lazuli stone.",
+    image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/rg.jpg-lA6fcjZPmPgzNpYL4Sb4fb8hoDwBkg.jpeg",
+    alt: "A hand wearing a silver ring with a square blue Lapis Lazuli stone on the ring finger.",
     body: [
       "Let's be real. Hours after my mum passed, my head was a mess. Numb. In that chaos, for no reason at all, I started going through her stuff. My hand just found this ring. Didn't even really look at it.",
       "I was on the phone, distracted, tried putting it on. Wouldn't fit my index finger. Wouldn't fit my middle. My hands were full, so I got my cousin to stick it on the only one it fit. The wedding finger.",
@@ -123,9 +191,29 @@ const storyChapters = [
       </svg>
     ),
     body: [
-      "Then it gets weirder. I've always been into Egyptian mythology. It's not just a phase; I've got Tutankhamun and the Eye of Horus tatted on my arm. It's part of me.",
-      "The stone in the ring is Lapis Lazuli. The exact same stone the Egyptians were obsessed with. They thought it was a piece of the sky, used it on their pharaohs' tombs to guide them in the afterlife.",
-      "So, a stone that's part of my own personal mythology, a passion I got while living in the UK, just shows up in my mum's things, here in Brazil. The odds of that are mad.",
+      "Then it gets weirder. I've always been into Egyptian mythology. It's not just a phase; it's a core part of my identity. So when I found out the stone in the ring was Lapis Lazuli, the exact same stone the Egyptians were obsessed with, it felt significant.",
+      "They thought it was a piece of the sky, a guide for souls in the afterlife. So, a stone that's part of my own personal mythology just shows up in my mum's things. The odds of that are mad.",
+    ],
+  },
+  {
+    title: "The Prophecy on Skin",
+    type: "gallery",
+    body: [
+      "And when I say it's a part of my identity, I mean it's literally written on my skin. This isn't just an interest; it's a story I've been carrying for years. Here's the proof.",
+    ],
+    images: [
+      {
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/unnamed.jpg-JMscswTrved2bbqQ3RZ3wRdrbtNcD9.jpeg",
+        alt: "Tattoo of Anubis with ankh symbol and Eye of Horus inside a pyramid on forearm",
+      },
+      {
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/tutt.jpg-7bJT9fKjgLWppvWN13ANbiNyP9cx0X.jpeg",
+        alt: "Tattoo of Pharaoh Tutankhamun's death mask on arm",
+      },
+      {
+        src: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/kk.jpg-TBojg7Xnd1rwgVfYIK5nc9PUsgUnJK.jpeg",
+        alt: "Tattoo of ornate gates with stairway surrounded by clouds",
+      },
     ],
   },
   {
@@ -143,9 +231,9 @@ const storyChapters = [
       </svg>
     ),
     body: [
-      "Then my own playlist started talking to me. A raw, biographical song about a son's sacrifice for his immigrant mother—ending with his own mum's voice—started hitting different.",
+      "Then the outside world started confirming it. My own playlist served up a raw, biographical song about a son's sacrifice for his immigrant mother—ending with his real mum's voice.",
       "Another track, about a fire burning so hot it only leaves pure 'white ash,' became real too. The ash from my rollies on the table was a constant reminder of my own trial by fire.",
-      "The proof? I went to find a track on my phone, and the comment count was at 444. The same number I have tattooed on my neck. That's not a coincidence. That's the universe making a point you can't ignore.",
+      "The proof? I went to find a track online, and the comment count was at 444. The same number I have tattooed on my neck. That's not a coincidence. That's the universe making a point you can't ignore.",
     ],
   },
   {
@@ -203,18 +291,9 @@ const storyChapters = [
   {
     title: "A Message From The Stars",
     type: "interactive",
-    icon: (
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="48"
-        height="48"
-        viewBox="0 0 256 256"
-        fill="currentColor"
-        className="text-amber-300"
-      >
-        <path d="M228,128a12,12,0,0,1-12,12H183.13l-16.64,38.28a12,12,0,0,1-21.92-9.52L156,140H100l-11.43,28.76a12,12,0,0,1-21.92-9.52L84.87,140H40a12,12,0,0,1,0-24h44.87l11.43-28.76a12,12,0,0,1,21.92,9.52L108,116h56l11.43-28.76a12,12,0,0,1,21.92,9.52L183.13,116H216A12,12,0,0,1,228,128Z"></path>
-      </svg>
-    ),
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Gemini_Generated_Image_r3vnk5r3vnk5r3vn.png-rMPIRpMvZ7a33eSVVEmB1fmAwPuONG.jpeg",
+    alt: "Egyptian pyramids under a cosmic starry sky with nebulae and constellation lines",
     body: [],
   },
 ]
@@ -241,7 +320,7 @@ const MessageGenerator = () => {
   return (
     <div className="w-full text-center">
       <p className="mb-8 text-lg leading-relaxed text-gray-300">
-        This story is a message. If you feel you need one more, just ask.
+        This whole story isn't a coincidence. It's a message. If you feel you need one more, just ask.
       </p>
       <Button
         onClick={generateMessage}
@@ -280,6 +359,7 @@ export default function RingStory() {
   return (
     <div className="bg-black text-gray-200 min-h-screen flex flex-col items-center justify-center p-4 antialiased overflow-hidden relative">
       <Starfield />
+      <BackgroundAudio />
       <div
         key={currentPage}
         ref={storyContainerRef}
@@ -302,6 +382,22 @@ export default function RingStory() {
           <div className="text-lg leading-relaxed space-y-6 text-gray-300">
             {currentChapter.type === "interactive" ? (
               <MessageGenerator />
+            ) : currentChapter.type === "gallery" ? (
+              <>
+                {currentChapter.body?.map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+                  {currentChapter.images?.map((img, i) => (
+                    <img
+                      key={i}
+                      src={img.src || "/placeholder.svg"}
+                      alt={img.alt}
+                      className="rounded-lg shadow-lg w-full h-auto object-cover border-2 border-amber-300/20 hover:border-amber-300/50 transition-all duration-300"
+                    />
+                  ))}
+                </div>
+              </>
             ) : (
               currentChapter.body?.map((paragraph, i) => <p key={i}>{paragraph}</p>)
             )}
