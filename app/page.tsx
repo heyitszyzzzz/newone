@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image" // Import the Image component
 import {
   Menu,
   X,
@@ -47,7 +48,13 @@ export default function CoachingWebsite() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-20">
             <div className="flex items-center space-x-3">
-              <img src="/images/jmp-logo.png" alt="JMP Coaching Logo" className="w-10 h-10 object-contain" />
+              <Image
+                src="/images/jmp-logo.png"
+                alt="JMP Coaching Logo"
+                width={40}
+                height={40}
+                className="object-contain"
+              />
               <div className="text-2xl font-bold text-cyan-400">JMP Coaching</div>
             </div>
 
@@ -146,16 +153,11 @@ export default function CoachingWebsite() {
             <PrimaryCTA />
           </div>
           <div className="mt-16 max-w-3xl mx-auto bg-[#1a1a1a] rounded-xl overflow-hidden shadow-lg border border-cyan-500/20 animate-fade-in-up delay-500">
-            <div className="relative w-full pt-[56.25%]">
+            <div className="relative w-full pt-[56.25%] flex items-center justify-center">
               {" "}
               {/* 16:9 Aspect Ratio */}
-              <img
-                src="/placeholder.svg?height=400&width=700"
-                alt="Video Placeholder"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50 text-white text-xl font-semibold">
-                30-Second Intro Video Placeholder
+              <div className="absolute inset-0 flex items-center justify-center bg-black/70 text-white text-2xl font-semibold">
+                Video Coming Soon!
               </div>
             </div>
           </div>
@@ -286,9 +288,11 @@ export default function CoachingWebsite() {
             </div>
             <div className="animate-fade-in-up delay-200">
               <div className="relative max-w-xs mx-auto">
-                <img
+                <Image
                   src="/images/app-workout.png"
                   alt="Everfit Training Interface"
+                  width={300}
+                  height={600}
                   className="w-full rounded-2xl shadow-2xl border border-cyan-500/20"
                 />
               </div>
@@ -319,9 +323,11 @@ export default function CoachingWebsite() {
             </div>
             <div className="animate-fade-in-up delay-200 md:order-1">
               <div className="relative max-w-xs mx-auto">
-                <img
+                <Image
                   src="/images/app-mealplan.png"
                   alt="Everfit Nutrition Interface"
+                  width={300}
+                  height={600}
                   className="w-full rounded-2xl shadow-2xl border border-cyan-500/20"
                 />
               </div>
@@ -352,9 +358,11 @@ export default function CoachingWebsite() {
             </div>
             <div className="animate-fade-in-up delay-200">
               <div className="relative max-w-xs mx-auto">
-                <img
+                <Image
                   src="/images/app-details.png"
                   alt="Everfit Check-in Interface"
+                  width={300}
+                  height={600}
                   className="w-full rounded-2xl shadow-2xl border border-cyan-500/20"
                 />
               </div>
@@ -387,9 +395,11 @@ export default function CoachingWebsite() {
               <CardContent className="p-8">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
                   <div className="relative w-32 h-32 flex-shrink-0">
-                    <img
+                    <Image
                       src="/images/testimonials/male-front-carlito-before-after.jpeg"
                       alt="Carlito Before/After"
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover rounded-lg shadow-md"
                     />
                     <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
@@ -413,9 +423,11 @@ export default function CoachingWebsite() {
               <CardContent className="p-8">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
                   <div className="relative w-32 h-32 flex-shrink-0">
-                    <img
+                    <Image
                       src="/images/testimonials/male-back-before-after.jpeg"
                       alt="Tristan Before/After Back"
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover rounded-lg shadow-md"
                     />
                     <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
@@ -439,9 +451,11 @@ export default function CoachingWebsite() {
               <CardContent className="p-8">
                 <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 mb-6">
                   <div className="relative w-32 h-32 flex-shrink-0">
-                    <img
+                    <Image
                       src="/images/testimonials/male-side-20lbs-before-after.jpeg"
                       alt="Jay Before/After -20lbs"
+                      width={128}
+                      height={128}
                       className="w-full h-full object-cover rounded-lg shadow-md"
                     />
                     <span className="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-white text-xs px-2 py-1 rounded-full">
@@ -474,9 +488,11 @@ export default function CoachingWebsite() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div className="animate-fade-in-up">
               <div className="relative max-w-md mx-auto">
-                <img
+                <Image
                   src="/images/coach-julio-new.jpeg"
                   alt="Coach Julio - Founder of JMP Coaching"
+                  width={400}
+                  height={600}
                   className="w-full rounded-2xl shadow-2xl border border-cyan-500/20"
                 />
               </div>
@@ -661,7 +677,13 @@ export default function CoachingWebsite() {
       <footer className="border-t border-cyan-500/20 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <div className="flex items-center justify-center space-x-3 mb-4">
-            <img src="/images/jmp-logo.png" alt="JMP Coaching Logo" className="w-8 h-8 object-contain" />
+            <Image
+              src="/images/jmp-logo.png"
+              alt="JMP Coaching Logo"
+              width={32}
+              height={32}
+              className="object-contain"
+            />
             <div className="text-2xl font-bold text-cyan-400">JMP Coaching</div>
           </div>
           <p className="text-slate-400 mb-6">
