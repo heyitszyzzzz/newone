@@ -613,7 +613,7 @@ export default function Component() {
             <div className="md:w-1/3 text-center">
               <div className="relative">
                 <Image
-                  src="/images/coach.png"
+                  src="/images/coach-new.jpg"
                   alt="Photo of Coach Julio"
                   width={300}
                   height={300}
@@ -625,22 +625,24 @@ export default function Component() {
               </div>
             </div>
             <div className="md:w-2/3">
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-brand-dark mb-4">
-                Hello, I&apos;m Julio!
-              </h2>
+              <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-brand-dark mb-4">Hello, I'm Julio!</h2>
               <p className="text-brand-gray mb-4">
-                I know exactly how you feel. The frustration of training hard and not seeing your glutes grow. The
-                constant battle with belly fat. The feeling that your body just isn&apos;t responding. I&apos;ve been
-                there.
+                You're putting in the work—showing up, training hard, sticking to the plan—but your body's just not
+                giving anything back. Maybe your glutes aren't building like you want, or those areas you wish would
+                finally change just feel stuck. If that sounds familiar, you're not alone.
               </p>
               <p className="text-brand-gray mb-4">
-                After years of studying and applying these methods to myself and hundreds of female clients, I&apos;ve
-                cracked the code. My method combines precise strength training with intelligent nutrition to build a
-                strong, defined, and healthy body. My goal isn&apos;t to give you a generic plan, but to teach you to
-                understand your body and equip you with the tools for a lifelong transformation.
+                The truth? Most people settle for slow progress, or give up altogether, because nobody has shown them
+                what actually works for their body. That ends here.
+              </p>
+              <p className="text-brand-gray mb-4">
+                My approach is simple: direct, smart strength training that sculpts your shape and evidence-based
+                nutrition that actually fits your life. No generic templates. No guesswork. Just clear steps, expert
+                support, and real results—so you can finally stop wondering "what if?"
               </p>
               <p className="text-brand-dark font-semibold">
-                Shall we build the body you not only dream of, but deserve to have, together?
+                If you're tired of spinning your wheels, ready to feel proud every time you look in the mirror, and know
+                it's time to level up—let's get you in the shape you deserve. Your transformation starts now.
               </p>
             </div>
           </div>
