@@ -20,6 +20,17 @@ const config = {
     },
     extend: {
       colors: {
+        // Updated color palette to match the new logo
+        "brand-pink": "#E91E63", // Vibrant magenta from logo
+        "brand-light-pink": "#F8BBD9", // Lighter pink
+        "brand-bg-pink": "#F3E5F5", // Very light pink background
+        "brand-dark": "#1A1A1A", // Rich black from logo
+        "brand-gray": "#4A4A4A", // Medium gray
+        "brand-accent": "#FF4081", // Bright accent pink
+        "brand-gradient-start": "#E91E63",
+        "brand-gradient-end": "#FF4081",
+
+        // Keep existing shadcn colors for components
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -53,21 +64,6 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
-        // Custom colors for JMP Coaching
-        "accent-orange": "#FF7F00", // Vibrant orange for CTA
-        "cyan-400": "#22D3EE",
-        "cyan-500": "#06B6D4",
-        "blue-500": "#3B82F6",
-        "slate-200": "#E2E8F0",
-        "slate-300": "#CBD5E1",
-        "slate-400": "#94A3B8",
-        "slate-500": "#64748B",
-        "gray-100": "#F3F4F6",
-        "gray-200": "#E5E7EB",
-        "gray-700": "#374151",
-        "gray-800": "#1F2937",
-        "gray-900": "#111827",
-        "yellow-400": "#FACC15",
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -83,10 +79,29 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "pulse-glow": {
+          "0%, 100%": {
+            boxShadow: "0 0 20px rgba(233, 30, 99, 0.3)",
+          },
+          "50%": {
+            boxShadow: "0 0 40px rgba(233, 30, 99, 0.6)",
+          },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "pulse-glow": "pulse-glow 2s ease-in-out infinite",
+        float: "float 3s ease-in-out infinite",
+      },
+      backgroundImage: {
+        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
+        "gradient-brand": "linear-gradient(135deg, #E91E63 0%, #FF4081 100%)",
+        "gradient-brand-light": "linear-gradient(135deg, #F8BBD9 0%, #F3E5F5 100%)",
       },
     },
   },
