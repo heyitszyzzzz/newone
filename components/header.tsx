@@ -14,6 +14,7 @@ export function Header() {
     { name: "Doors & Interiors", href: "/doors-interiors" },
     { name: "Outdoor Work", href: "/outdoor-work" },
     { name: "Kitchens & Bathrooms", href: "/kitchens-bathrooms" },
+    { name: "Material Optimizer", href: "/material-optimizer" },
     { name: "Contact", href: "#contact" },
   ]
 
