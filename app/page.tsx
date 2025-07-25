@@ -16,6 +16,7 @@ import {
   Star,
   Zap,
 } from "lucide-react"
+import CalorieCalculator from "@/components/calorie-calculator" // Import the new component
 
 export default function Component() {
   const calendlyLink = "https://calendly.com/juliopedro1802/30min"
@@ -586,6 +587,13 @@ export default function Component() {
         </div>
       </section>
 
+      {/* New Calorie Calculator Section */}
+      <section className="py-12 md:py-16 bg-white">
+        <div className="container mx-auto px-4 sm:px-6">
+          <CalorieCalculator />
+        </div>
+      </section>
+
       <section id="agendar" className="bg-gradient-brand py-12 md:py-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         <div className="container mx-auto px-4 sm:px-6 text-center relative z-10">
@@ -843,9 +851,9 @@ export default function Component() {
                 Can I still enjoy nights out, takeaways, and holidays?
               </AccordionTrigger>
               <AccordionContent className="p-6 pt-0 text-brand-gray">
-                Absolutely! Our coaching plans are designed for real life—with flexible nutrition tips, hangover
-                recovery strategies, and smart workouts. You can enjoy yourself and still reach your goals. Life's too
-                short to miss out on fun!
+                Our coaching plans are designed for real life—with flexible nutrition tips, hangover recovery
+                strategies, and smart workouts. You can enjoy yourself and still reach your goals. Life's too short to
+                miss out on fun!
               </AccordionContent>
             </AccordionItem>
 
