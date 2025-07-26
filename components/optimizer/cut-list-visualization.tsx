@@ -57,37 +57,49 @@ export function CutListVisualization({ results, onNext, onBack }: CutListVisuali
   ]
 
   return (
-    <Card className="p-8 bg-white shadow-chrome border border-mt-gray-200">
-      <div className="mb-8">
-        <h2 className="text-3xl font-bold text-mt-black mb-4">Cut Plan Visualization</h2>
-        <p className="text-mt-gray-600">Review how pieces will be arranged on each board to minimize waste.</p>
+    <Card className="p-4 sm:p-8 bg-white shadow-chrome border border-mt-gray-200">
+      <div className="mb-6 sm:mb-8">
+        <h2 className="text-2xl sm:text-3xl font-bold text-mt-black mb-4">Cut Plan Visualization</h2>
+        <p className="text-mt-gray-600 text-sm sm:text-base">
+          Review how pieces will be arranged on each board to minimize waste.
+        </p>
       </div>
 
       {/* Summary Stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <div className="text-center p-4 bg-mt-gray-50 rounded-lg">
-          <div className="text-2xl font-bold text-mt-black">{results.materialSummary.totalBoards}</div>
-          <div className="text-sm text-mt-gray-600">Total Boards</div>
+          <div className="text-xl sm:text-2xl font-bold text-mt-black">{results.materialSummary.totalBoards}</div>
+          <div className="text-xs sm:text-sm text-mt-gray-600">Total Boards</div>
         </div>
         <div className="text-center p-4 bg-mt-gray-50 rounded-lg">
-          <div className="text-2xl font-bold text-green-600">£{results.materialSummary.totalCost.toFixed(2)}</div>
-          <div className="text-sm text-mt-gray-600">Estimated Cost</div>
+          <div className="text-xl sm:text-2xl font-bold text-green-600">
+            £{results.materialSummary.totalCost.toFixed(2)}
+          </div>
+          <div className="text-xs sm:text-sm text-mt-gray-600">Estimated Cost</div>
         </div>
         <div className="text-center p-4 bg-mt-gray-50 rounded-lg">
-          <div className="text-2xl font-bold text-orange-600">{results.materialSummary.wastePercentage}%</div>
-          <div className="text-sm text-mt-gray-600">Material Waste</div>
+          <div className="text-xl sm:text-2xl font-bold text-orange-600">
+            {results.materialSummary.wastePercentage}%
+          </div>
+          <div className="text-xs sm:text-sm text-mt-gray-600">Material Waste</div>
         </div>
       </div>
 
       {/* Board Layouts */}
-      <div className="space-y-8">
+      <div className="space-y-6 sm:space-y-8">
         {results.visualization.layouts.map((layout, boardIndex) => (
-          <div key={boardIndex} className="border border-mt-gray-200 rounded-lg p-6">
-            <h3 className="text-lg font-semibold text-mt-black mb-4">{layout.boardId}</h3>
+          <div key={boardIndex} className="border border-mt-gray-200 rounded-lg p-4 sm:p-6">
+            <h3 className="text-base sm:text-lg font-semibold text-mt-black mb-4">{layout.boardId}</h3>
 
             {/* SVG Visualization */}
-            <div className="bg-mt-gray-50 p-4 rounded-lg overflow-x-auto">
-              <svg width="800" height="400" viewBox="0 0 2440 1220" className="border border-mt-gray-300 bg-white">
+            <div className="bg-mt-gray-50 p-2 sm:p-4 rounded-lg overflow-x-auto">
+              <svg
+                width="100%"
+                height="300"
+                viewBox="0 0 2440 1220"
+                className="border border-mt-gray-300 bg-white min-w-[300px]"
+                preserveAspectRatio="xMidYMid meet"
+              >
                 {/* Board outline */}
                 <rect x="0" y="0" width="2440" height="1220" fill="none" stroke="#374151" strokeWidth="4" />
 
@@ -109,7 +121,7 @@ export function CutListVisualization({ results, onNext, onBack }: CutListVisuali
                       y={piece.y + piece.height / 2}
                       textAnchor="middle"
                       dominantBaseline="middle"
-                      fontSize="24"
+                      fontSize="20"
                       fontWeight="bold"
                       fill="#1F2937"
                     >
@@ -138,11 +150,18 @@ export function CutListVisualization({ results, onNext, onBack }: CutListVisuali
       </div>
 
       {/* Navigation */}
-      <div className="flex justify-between pt-8">
-        <Button variant="outline" onClick={onBack} className="px-8 py-3 bg-transparent">
+      <div className="flex flex-col sm:flex-row justify-between gap-3 pt-6 sm:pt-8">
+        <Button
+          variant="outline"
+          onClick={onBack}
+          className="w-full sm:w-auto px-6 sm:px-8 py-3 h-12 bg-transparent order-2 sm:order-1"
+        >
           Back
         </Button>
-        <Button onClick={onNext} className="bg-mt-yellow hover:bg-mt-yellow-dark text-mt-black font-semibold px-8 py-3">
+        <Button
+          onClick={onNext}
+          className="w-full sm:w-auto bg-mt-yellow hover:bg-mt-yellow-dark text-mt-black font-semibold px-6 sm:px-8 py-3 h-12 order-1 sm:order-2"
+        >
           View Results
         </Button>
       </div>
